@@ -359,6 +359,29 @@ router.post('/ask', validateAskRequest, async (req, res, next) => {
       
       const assistantMessage = await openaiService.getLatestAssistantMessage(threadId);
       
+      // Check if the completed message contains lead data and process it
+      let leadProcessingResult = { detected: false, processed: false };
+      if (leadProcessor && leadProcessor.isLeadData(assistantMessage.content)) {
+        console.log(`🎯 Detected lead data in ${employeeConfig.name}'s completed message, processing...`);
+        try {
+          leadProcessingResult = await leadProcessor.processLeadData(
+            assistantMessage.content,
+            employeeId
+          );
+          console.log(`✅ Successfully processed ${leadProcessingResult.count} leads from ${employeeConfig.name}'s completed message`);
+          leadProcessingResult.detected = true;
+        } catch (leadError) {
+          console.error(`❌ Failed to process leads from ${employeeConfig.name}'s completed message:`, leadError.message);
+          leadProcessingResult = {
+            detected: true,
+            processed: false,
+            error: leadError.message
+          };
+        }
+      } else {
+        console.log(`ℹ️ No lead data detected in ${employeeConfig.name}'s completed message`);
+      }
+      
       const response = {
         status: 'completed',
         message: assistantMessage.content,
@@ -366,6 +389,7 @@ router.post('/ask', validateAskRequest, async (req, res, next) => {
         run_id: runId,
         assistant_id: assistantId,
         employee: employeeConfig,
+        lead_processing: leadProcessingResult,
         isolation_verified: true,
         timestamp: new Date().toISOString()
       };
