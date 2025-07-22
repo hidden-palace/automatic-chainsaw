@@ -1363,7 +1363,7 @@ function displayLeadsTable(leads) {
         </div>
       </td>
       <td>
-        <span class="score ${<span class="score">${(lead.average_score || 0).toFixed(1)}</span>}
+       <span class="score">${(lead.average_score || 0).toFixed(1)}</span>
       </td>
       <td>
         <span class="status ${getLeadStatus(lead)}">${getLeadStatusText(lead)}</span>
