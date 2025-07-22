@@ -50,10 +50,8 @@
 
 .company-logo {
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 16px;
-    margin-bottom: 20px;
+    align-items: flex-start;
+    gap: 12px;
 }
 
 .logo-icon {
@@ -72,40 +70,39 @@
 }
 
 #company-logo-img {
-  width: 64px;
-  height: 64px;
+  width: 48px;
+  height: 48px;
   object-fit: contain;
-  border-radius: 12px;
+  border-radius: 8px;
   background: rgba(255, 255, 255, 0.1);
   display: none; /* Hidden by default, shown when logo is loaded */
-  border: 2px solid rgba(255, 255, 255, 0.2);
 }
 
-#company-logo-img.loaded {
-  display: block;
-}
-
-#company-logo-img.loaded + .logo-icon {
-  display: none;
-}
-
-.company-text-info {
-  text-align: center;
-  margin-top: 8px;
-}
-
-.company-text-info h3 {
+.company-info h3 {
     font-size: 18px;
     font-weight: 600;
     color: white;
-    margin-bottom: 6px;
+    margin-bottom: 2px;
 }
 
-.company-text-info p {
+.company-info p {
     font-size: 14px;
     color: rgba(255, 255, 255, 0.8);
-    margin-bottom: 0;
+    margin-bottom: 4px;
+}
+
+.tagline {
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.9);
     font-weight: 500;
+    display: block;
+    margin-bottom: 2px;
+}
+
+.company-info small {
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.6);
+    font-style: italic;
 }
 
 .sidebar-nav {
