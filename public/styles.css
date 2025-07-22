@@ -5,17 +5,19 @@
 }
 
 :root {
-    --primary-color: #3b82f6;
+    --primary-color: #ec4899;
     --secondary-color: #64748b;
     --accent-color: #f97316;
     --success-color: #10b981;
     --warning-color: #f59e0b;
     --error-color: #ef4444;
-    --background-color: #f8fafc;
+    --background-color: #f8fafc : #f8fafc;
     --surface-color: #ffffff;
     --text-primary: #1e293b;
     --text-secondary: #64748b;
     --border-color: #e2e8f0;
+}
+
   .header-actions {
     display: flex;
     gap: 12px;
