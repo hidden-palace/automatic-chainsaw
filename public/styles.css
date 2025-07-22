@@ -34,7 +34,7 @@
 
 /* Sidebar Styles */
 .sidebar {
-    width: 420px;
+    width: 200px;
     background: var(--primary-color);
     display: flex;
     flex-direction: column;
