@@ -67,6 +67,9 @@ document.addEventListener('DOMContentLoaded', function() {
   // Load dashboard metrics
   loadDashboardMetrics();
   
+  // Load company branding
+  loadCompanyBranding();
+  
   console.log('🚀 Orchid Republic Command Center initialized');
 });
 
@@ -1442,6 +1445,66 @@ function viewLead(leadId) {
 function editLead(leadId) {
   // TODO: Implement lead editing
   console.log('Edit lead:', leadId);
+}
+
+/**
+ * Load company branding from API and update sidebar header
+ */
+async function loadCompanyBranding() {
+    try {
+        console.log('🎨 Loading company branding...');
+        
+        const response = await fetch('/api/branding');
+        const branding = await response.json();
+        
+        const logoImg = document.getElementById('company-logo-img');
+        const logoIcon = document.querySelector('.logo-icon');
+        
+        if (branding.logo_url && branding.logo_url.trim() !== '') {
+            console.log('✅ Company logo found:', branding.logo_url);
+            
+            // Create a new image to test if it loads successfully
+            const testImg = new Image();
+            
+            testImg.onload = function() {
+                // Image loaded successfully
+                logoImg.src = branding.logo_url;
+                logoImg.classList.add('loaded');
+                logoImg.style.display = 'block';
+                logoIcon.style.display = 'none';
+                console.log('🖼️ Company logo displayed successfully');
+            };
+            
+            testImg.onerror = function() {
+                // Image failed to load, use fallback
+                console.warn('⚠️ Company logo failed to load, using fallback');
+                logoImg.style.display = 'none';
+                logoIcon.style.display = 'flex';
+            };
+            
+            testImg.src = branding.logo_url;
+        } else {
+            console.log('ℹ️ No company logo configured, using fallback icon');
+            logoImg.style.display = 'none';
+            logoIcon.style.display = 'flex';
+        }
+        
+        // You can also dynamically update company name and slug if needed
+        // const companyName = document.getElementById('company-name');
+        // const companySlug = document.getElementById('company-slug');
+        // if (branding.company_name) companyName.textContent = branding.company_name;
+        // if (branding.company_tagline) companySlug.textContent = branding.company_tagline;
+        
+    } catch (error) {
+        console.error('❌ Failed to load company branding:', error);
+        
+        // Ensure fallback is shown on error
+        const logoImg = document.getElementById('company-logo-img');
+        const logoIcon = document.querySelector('.logo-icon');
+        
+        logoImg.style.display = 'none';
+        logoIcon.style.display = 'flex';
+    }
 }
 
 // Load saved color scheme on page load
